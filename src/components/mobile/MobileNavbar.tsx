@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -95,10 +96,21 @@ const MobileNavbar: React.FC = () => {
 
   return (
     <>
-      {/* Navbar */}
-      <nav className="w-full flex items-center justify-between px-4 py-3 bg-black/30 backdrop-blur-md text-white fixed top-0 left-0 z-30 md:hidden">
-        {/* Left: Hamburger only */}
-        <div className="flex items-center">
+      {/* Navbar with framer-motion slide-down animation */}
+      <motion.nav
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="w-full flex items-center justify-between px-4 py-3 bg-black/30 backdrop-blur-md text-white fixed top-0 left-0 z-30 md:hidden"
+        style={{ boxShadow: 'none', filter: 'none', background: 'rgba(0,0,0,0.3)' }}
+      >
+        {/* Left: Hamburger icon (slide from left) */}
+        <motion.div
+          initial={{ x: -60, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.15, ease: "easeOut" }}
+          className="flex items-center"
+        >
           <button
             onClick={() => setMenuOpen(true)}
             aria-label="Open Menu"
@@ -107,18 +119,28 @@ const MobileNavbar: React.FC = () => {
           >
             {HAMBURGER_ICON}
           </button>
-        </div>
-        {/* Center: Brand text in one line */}
-        <div className="flex-1 flex items-center justify-center">
-          <span className="font-bold text-xl text-white mr-1" style={{ fontFamily: 'Poppins, Montserrat, Arial, sans-serif', fontWeight: 700, letterSpacing: '0.04em' }}>Vroom</span>
-          <span className="bg-gradient-to-r from-white via-[#b993f7] to-[#a855f7] bg-clip-text text-transparent font-bold text-xl mr-1" style={{ fontFamily: 'Poppins, Montserrat, Arial, sans-serif', fontWeight: 700, letterSpacing: '0.04em' }}>Visions</span>
-          <span className="text-[#a855f7] font-bold text-xl" style={{ fontFamily: 'Poppins, Montserrat, Arial, sans-serif', fontWeight: 700, letterSpacing: '0.04em' }}>X</span>
-        </div>
-        {/* Right: Cart only */}
-        <div className="flex items-center">
+        </motion.div>
+        {/* Center: Brand text (slide from top) */}
+        <motion.div
+          initial={{ y: -40, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.25, ease: "easeOut" }}
+          className="flex-1 flex items-center justify-center"
+        >
+          <span className="text-white font-bold text-xl mr-1">Vroom</span>
+          <span className="bg-gradient-to-r from-white via-[#b993f7] to-[#a855f7] bg-clip-text text-transparent font-bold text-xl mr-1">Visions</span>
+          <span className="text-[#a855f7] font-bold text-xl">X</span>
+        </motion.div>
+        {/* Right: Cart icon (slide from right) */}
+        <motion.div
+          initial={{ x: 60, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.35, ease: "easeOut" }}
+          className="flex items-center"
+        >
           <Link href="/cart" aria-label="Cart" className="hover:text-purple-400">{CART_ICON}</Link>
-        </div>
-      </nav>
+        </motion.div>
+      </motion.nav>
 
       {/* Overlay Menu */}
       {/* Overlay Menu with animated hamburger to X */}

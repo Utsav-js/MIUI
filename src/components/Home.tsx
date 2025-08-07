@@ -34,23 +34,48 @@ const Home: React.FC = () => {
   return (
     <>
       {/* Navbar removed to avoid duplicate navigation bar */}
-      {/* Main background wrapper - fixed position to cover entire viewport */}
-      <div className="fixed inset-0 z-[-1]">
+      {/* Main background wrapper - fixed position to cover entire viewport (mobile + desktop) */}
+      <div
+        className="fixed inset-0 z-[-1] w-screen h-screen overflow-hidden"
+        style={{ minHeight: '100dvh', minWidth: '100vw' }}
+      >
+        {/* Fallback background color for video loading */}
+        <div className="absolute inset-0 bg-black" style={{ zIndex: 0 }} />
         {/* Video background */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute inset-0 bg-black/40 z-[1]" />
-          <video 
-            className="absolute top-0 left-0 min-w-full min-h-full object-cover opacity-80"
-            autoPlay 
-            muted 
-            loop 
+        <div className="absolute inset-0 overflow-hidden" style={{ zIndex: 1 }}>
+          <div className="absolute inset-0 bg-black/40" style={{ zIndex: 2 }} />
+          <video
+            className="absolute top-0 left-0"
+            style={{
+              width: '100vw',
+              height: '100dvh',
+              minWidth: '100vw',
+              minHeight: '100dvh',
+              objectFit: 'cover',
+              objectPosition: 'center',
+              opacity: 0.8,
+              zIndex: 1,
+              background: '#000',
+              maxWidth: 'none',
+              maxHeight: 'none',
+              pointerEvents: 'none',
+            }}
+            autoPlay
+            muted
+            loop
             playsInline
           >
             <source src="/videos/blackhole.webm" type="video/webm" />
             Your browser does not support the video tag.
           </video>
         </div>
-        {/* StarsCanvas background */}
+      </div>
+
+      {/* StarsCanvas background - background wrapper ke andar */}
+      <div
+        className="absolute inset-0 w-full h-full pointer-events-none"
+        style={{ zIndex: 3 }}
+      >
         <StarsCanvas />
       </div>
       {/* Hero Section */}

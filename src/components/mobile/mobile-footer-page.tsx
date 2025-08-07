@@ -4,9 +4,9 @@ import Footer from "@/components/Footer";
 
 export default function MobileFooterPage() {
   return (
-    <div className="md:hidden min-h-screen flex flex-col justify-end bg-black text-white">
-      {/* Desktop Footer shown on mobile */}
+    <footer className="md:hidden w-full bg-black text-white py-6 px-4 flex flex-col items-center border-t border-white/10">
+      {/* You can customize this for mobile-specific links or info if needed */}
       <Footer />
-    </div>
+    </footer>
   );
 }

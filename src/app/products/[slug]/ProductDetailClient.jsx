@@ -7,7 +7,20 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ShoppingCart, ArrowLeft, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, Star } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (i = 1) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.07,
+      duration: 0.5,
+    },
+  }),
+};
 import StarsCanvas from "@/components/StarsCanvas";
+import Footer from "@/components/Footer";
 
 export default function ProductDetailClient({ product }) {
   const router = useRouter();
@@ -51,14 +64,13 @@ export default function ProductDetailClient({ product }) {
       </div>
       <motion.section 
         className="relative py-16 z-10"
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
       >
-        <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row gap-8 items-start justify-center">
-        </div>
+        <motion.div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row gap-8 items-start justify-center" variants={fadeInUp} custom={0} />
         {/* Back to products button OUTSIDE the card, above the main flex container */}
-        <div className="w-full max-w-6xl mx-auto flex flex-col items-start px-2 md:px-0" style={{ marginBottom: 24, marginTop: 36 }}>
+        <motion.div className="w-full max-w-6xl mx-auto flex flex-col items-start px-4 md:px-0" style={{ marginBottom: 24, marginTop: 36 }} variants={fadeInUp} custom={1}>
           <button
             onClick={() => router.push("/#luts-section")}
             type="button"
@@ -67,10 +79,10 @@ export default function ProductDetailClient({ product }) {
           >
             <ArrowLeft className="mr-2 w-4 h-4" /> Back to products
           </button>
-        </div>
-        <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row gap-8 items-start justify-center">
+        </motion.div>
+        <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row gap-8 items-start justify-center px-4 md:px-0">
           {/* Image carousel section */}
-          <div className="flex-1 flex flex-col items-center justify-center">
+          <motion.div className="flex-1 flex flex-col items-center justify-center" variants={fadeInUp} custom={2}>
             <div className="relative w-full max-w-md aspect-square bg-white/5 rounded-2xl shadow-glow border border-white/10 flex items-center justify-center">
               <AnimatePresence mode="wait">
                 <motion.img
@@ -127,9 +139,9 @@ export default function ProductDetailClient({ product }) {
                 </div>
               )}
             </div>
-          </div>
+          </motion.div>
           {/* Details card section */}
-          <div className="flex-1 w-full max-w-lg bg-purple-900/30 rounded-2xl shadow-glow p-8 border border-white/10 backdrop-blur-md flex flex-col">
+          <motion.div className="flex-1 w-full max-w-lg bg-purple-900/30 rounded-2xl shadow-glow p-6 md:p-8 border border-white/10 backdrop-blur-md flex flex-col" variants={fadeInUp} custom={3}>
             <h1 className="text-3xl md:text-4xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-white to-purple-300">
               {product.name}
             </h1>
@@ -187,9 +199,13 @@ export default function ProductDetailClient({ product }) {
                 Add to Cart
               </Button>
             </div>
-          </div>
+          </motion.div>
         </div>
       </motion.section>
+      {/* Mobile Footer for mobile view */}
+      <div className="md:hidden">
+        <Footer />
+      </div>
     </>
   );
 }
