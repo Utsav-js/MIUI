@@ -17,7 +17,6 @@ export default function Page() {
       {/* Desktop-only component */}
       <div className="hidden md:block">
         <Home />
-        <Footer />
       </div>
     </>
   );

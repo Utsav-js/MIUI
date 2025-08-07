@@ -4,6 +4,7 @@ import StarsCanvas from "@/components/StarBackground";
 import MobileNavbar from "@/components/mobile/MobileNavbar";
 import Footer from "@/components/Footer";
 import MobilePaymentSuccessPage from "@/components/mobile/MobilePaymentSuccessPage";
+import { motion } from "framer-motion";
 
 export default function PaymentSuccessPage() {
   return (
@@ -11,7 +12,19 @@ export default function PaymentSuccessPage() {
       {/* Mobile-only components */}
       <div className="md:hidden">
         <MobileNavbar />
-        <MobilePaymentSuccessPage />
+        <div className="relative">
+          {/* Animate the mobile payment success page container */}
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: { opacity: 0, y: 40 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+            }}
+          >
+            <MobilePaymentSuccessPage />
+          </motion.div>
+        </div>
         <Footer />
       </div>
       {/* Desktop-only component */}

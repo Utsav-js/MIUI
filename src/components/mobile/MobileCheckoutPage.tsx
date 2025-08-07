@@ -1,6 +1,18 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+const fadeInUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (i = 1) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.05,
+      duration: 0.5,
+    },
+  }),
+};
 import { useCart } from "@/contexts/CartContext";
 import StarsCanvas from "@/components/StarBackground";
 
@@ -19,7 +31,12 @@ const MobileCheckoutPage: React.FC = () => {
   const finalTotal = totalPrice - discountAmount;
 
   return (
-    <>
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={fadeInUp}
+      custom={1}
+    >
       {/* Background video and stars */}
       <div className="fixed inset-0 z-[-1]">
         <div className="absolute inset-0 overflow-hidden">
@@ -37,9 +54,9 @@ const MobileCheckoutPage: React.FC = () => {
         </div>
         <StarsCanvas />
       </div>
-      <div className="container mx-auto px-4 py-16 relative z-10" style={{ paddingTop: '90px' }}>
-        <h1 className="text-2xl font-bold mb-8 text-white">Checkout</h1>
-        <div className="bg-purple-900/20 backdrop-blur-md p-6 rounded-lg shadow-glow border border-white/10">
+  <div className="container mx-auto px-4 py-16 relative z-10" style={{ paddingTop: '90px' }}>
+  <motion.h1 className="text-2xl font-bold mb-8 text-white" variants={fadeInUp} custom={2}>Checkout</motion.h1>
+  <motion.div className="bg-purple-900/20 backdrop-blur-md p-6 rounded-lg shadow-glow border border-white/10" variants={fadeInUp} custom={3}>
           <h2 className="text-lg font-bold mb-4 text-white">Order Summary</h2>
           <div className="border-b border-white/10 pb-4 mb-4">
             {cart.map((item) => (
@@ -82,8 +99,8 @@ const MobileCheckoutPage: React.FC = () => {
             <span>Total</span>
             <span className="text-white">₹{(finalTotal / 100).toFixed(2)}</span>
           </div>
-        </div>
-        <div className="bg-purple-900/20 backdrop-blur-md p-6 rounded-lg shadow-glow border border-white/10 mt-8">
+  </motion.div>
+  <motion.div className="bg-purple-900/20 backdrop-blur-md p-6 rounded-lg shadow-glow border border-white/10 mt-8" variants={fadeInUp} custom={4}>
           <h2 className="text-lg font-bold mb-4 text-white">Contact Information</h2>
           <input
             type="email"
@@ -129,9 +146,9 @@ const MobileCheckoutPage: React.FC = () => {
           >
             Pay Now
           </button>
-        </div>
+  </motion.div>
       </div>
-    </>
+    </motion.div>
   );
 };
 
