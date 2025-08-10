@@ -80,7 +80,8 @@ const MobileProductDetail: React.FC<MobileProductDetailProps> = ({ product }) =>
           className="bg-purple-900/20 backdrop-blur-md p-6 rounded-lg shadow-glow border border-white/10"
           variants={parentVariants}
           initial="hidden"
-          animate="visible"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
         >
           <motion.div variants={fadeInUp}>
             <h1 className="text-2xl font-bold mb-4 text-white">{product.name}</h1>
@@ -109,9 +110,7 @@ const MobileProductDetail: React.FC<MobileProductDetailProps> = ({ product }) =>
           <motion.div variants={fadeInUp}>
             <div className="flex items-center gap-4 mb-4">
               <span className="text-lg font-bold text-white">₹{(product.price / 100).toFixed(2)}</span>
-              <button className="bg-gradient-to-r from-[#7f53ac] to-[#657ced] text-white px-6 py-2 rounded-md font-semibold shadow-glow border border-white/10" onClick={handleAddToCart}>
-                Add to Cart
-              </button>
+              {/* Add to Cart button removed as per user request */}
               <button className="bg-purple-700 text-white px-6 py-2 rounded-md font-semibold shadow-glow border border-white/10" onClick={handleBuyNow}>
                 Buy Now
               </button>

@@ -10,14 +10,22 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
-  visible: (i = 1) => ({
+  visible: {
     opacity: 1,
     y: 0,
     transition: {
-      delay: i * 0.07,
       duration: 0.5,
     },
-  }),
+  },
+};
+
+const staggerParent = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.13,
+    },
+  },
 };
 import StarsCanvas from "@/components/StarsCanvas";
 import Footer from "@/components/Footer";
@@ -68,7 +76,6 @@ export default function ProductDetailClient({ product }) {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
       >
-        <motion.div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row gap-8 items-start justify-center" variants={fadeInUp} custom={0} />
         {/* Back to products button OUTSIDE the card, above the main flex container */}
         <motion.div className="w-full max-w-6xl mx-auto flex flex-col items-start px-4 md:px-0" style={{ marginBottom: 24, marginTop: 36 }} variants={fadeInUp} custom={1}>
           <button
@@ -80,7 +87,10 @@ export default function ProductDetailClient({ product }) {
             <ArrowLeft className="mr-2 w-4 h-4" /> Back to products
           </button>
         </motion.div>
-        <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row gap-8 items-start justify-center px-4 md:px-0">
+        <motion.div 
+          className="w-full max-w-6xl mx-auto flex flex-col md:flex-row gap-8 items-start justify-center px-4 md:px-0"
+          variants={fadeInUp}
+        >
           {/* Image carousel section */}
           <motion.div className="flex-1 flex flex-col items-center justify-center" variants={fadeInUp} custom={2}>
             <div className="relative w-full max-w-md aspect-square bg-white/5 rounded-2xl shadow-glow border border-white/10 flex items-center justify-center">
@@ -141,19 +151,25 @@ export default function ProductDetailClient({ product }) {
             </div>
           </motion.div>
           {/* Details card section */}
-          <motion.div className="flex-1 w-full max-w-lg bg-purple-900/30 rounded-2xl shadow-glow p-6 md:p-8 border border-white/10 backdrop-blur-md flex flex-col" variants={fadeInUp} custom={3}>
-            <h1 className="text-3xl md:text-4xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-white to-purple-300">
+          <motion.div 
+            className="flex-1 w-full max-w-lg bg-purple-900/30 rounded-2xl shadow-glow p-6 md:p-8 border border-white/10 backdrop-blur-md flex flex-col"
+            variants={staggerParent}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
+            <motion.h1 className="text-3xl md:text-4xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-white to-purple-300" variants={fadeInUp}>
               {product.name}
-            </h1>
-            <div className="flex items-center mb-2">
+            </motion.h1>
+            <motion.div className="flex items-center mb-2" variants={fadeInUp}>
               <div className="flex text-yellow-400 mr-2">
                 {[1, 2, 3, 4, 5].map((star) => (
                   <Star key={star} className={`w-4 h-4 ${star <= 4.5 ? "fill-current" : ""}`} />
                 ))}
               </div>
               <span className="text-gray-400">(42 reviews)</span>
-            </div>
-            <div className="flex items-center mb-4">
+            </motion.div>
+            <motion.div className="flex items-center mb-4" variants={fadeInUp}>
               <span className="text-2xl font-bold mr-2 text-white">${(product.price / 100).toFixed(2)}</span>
               {product.originalPrice && (
                 <span className="text-gray-400 line-through">${(product.originalPrice / 100).toFixed(2)}</span>
@@ -161,8 +177,8 @@ export default function ProductDetailClient({ product }) {
               {product.discount && (
                 <span className="text-green-400 font-semibold ml-2">-{product.discount}%</span>
               )}
-            </div>
-            <div className="flex flex-wrap gap-2 mb-4">
+            </motion.div>
+            <motion.div className="flex flex-wrap gap-2 mb-4" variants={fadeInUp}>
               {product.compatibility?.map((comp) => (
                 <Badge 
                   key={comp} 
@@ -172,17 +188,17 @@ export default function ProductDetailClient({ product }) {
                   {comp}
                 </Badge>
               ))}
-            </div>
-            <p className="text-gray-300 mb-4">{product.description}</p>
-            <div className="mb-6">
+            </motion.div>
+            <motion.p className="text-gray-300 mb-4" variants={fadeInUp}>{product.description}</motion.p>
+            <motion.div className="mb-6" variants={fadeInUp}>
               <h3 className="font-semibold text-lg mb-2">Key Features</h3>
               <ul className="list-disc list-inside space-y-2 text-gray-300">
                 {product.features?.map((feature, index) => (
                   <li key={index}>{feature}</li>
                 ))}
               </ul>
-            </div>
-            <div className="flex gap-3 mt-auto">
+            </motion.div>
+            <motion.div className="flex gap-3 mt-auto" variants={fadeInUp}>
               <Button 
                 variant="outline"
                 className="bg-transparent hover:bg-purple-900/40 border border-white/20 text-white px-6 py-3 rounded-md font-medium shadow-glow"
@@ -190,17 +206,10 @@ export default function ProductDetailClient({ product }) {
               >
                 Buy Now
               </Button>
-              <Button 
-                variant="outline" 
-                className="bg-transparent hover:bg-purple-900/40 border border-white/20 text-white px-6 py-3 rounded-md font-medium shadow-glow flex items-center"
-                onClick={handleAddToCart}
-              >
-                <ShoppingCart className="w-4 h-4 mr-2" />
-                Add to Cart
-              </Button>
-            </div>
+              {/* Add to Cart button removed as per user request */}
+            </motion.div>
           </motion.div>
-        </div>
+  </motion.div>
       </motion.section>
       {/* Mobile Footer for mobile view */}
       <div className="md:hidden">

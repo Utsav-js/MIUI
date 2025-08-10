@@ -1,5 +1,25 @@
 "use client";
 
+const fadeInUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.7,
+    },
+  },
+};
+
+const parentVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.35,
+    },
+  },
+};
+
 import React, { useEffect } from "react";
 import { ArrowRight } from "lucide-react";
 
@@ -81,73 +101,76 @@ const Home: React.FC = () => {
       {/* Hero Section */}
       <motion.section 
         className="relative pt-24 pb-20 overflow-hidden"
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
+        variants={parentVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
       >
-
         <div className="container relative mx-auto px-4 z-[5]">
-          <div className="text-center mb-10">
-            <h1 className="text-3xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-purple-300">
+          <motion.div className="text-center mb-10" variants={fadeInUp}>
+            <motion.h1 className="text-3xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-purple-300" variants={fadeInUp}>
               Transform Your Car Photography
-            </h1>
-            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+            </motion.h1>
+            <motion.p className="text-lg text-gray-300 max-w-2xl mx-auto" variants={fadeInUp}>
               Professional color grading that turns ordinary car photos into showroom-quality imagery with just one click.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
           {/* Image Comparison Slider */}
-          <div className="max-w-2xl mx-auto mb-8" id="before-after" style={{ scrollMarginTop: '80px' }}>
+          <motion.div className="max-w-2xl mx-auto mb-8" id="before-after" style={{ scrollMarginTop: '80px' }} variants={fadeInUp}>
             <iframe
               src="/slider.html"
               title="Before After Slider"
               className="w-full aspect-video border-none rounded-lg"
               style={{ height: 'auto', minHeight: '300px' }}
             ></iframe>
-            <p className="text-center mt-3 text-gray-400">
+            <motion.p className="text-center mt-3 text-gray-400" variants={fadeInUp}>
               Drag the slider to see the dramatic difference our premium LUTs make.
-            </p>
-          </div>
-
-
+            </motion.p>
+          </motion.div>
         </div>
       </motion.section>
       {/* Features Section */}
       <motion.section 
         className="py-16 bg-brand-dark" id="features"
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.4 }}
+        variants={parentVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
       >
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {mainFeatures.map((feature: Feature, index: number) => (
-              <FeatureCard
-                key={index}
-                icon={feature.icon}
-                title={feature.title}
-                description={feature.description}
-              />
+              <motion.div key={index} variants={fadeInUp}>
+                <FeatureCard
+                  icon={feature.icon}
+                  title={feature.title}
+                  description={feature.description}
+                />
+              </motion.div>
             ))}
+          </div>
         </div>
-      </div>
-    </motion.section>
+      </motion.section>
       {/* LUTs Section */}
       <motion.section 
         className="py-16 relative overflow-hidden" id="luts-section"
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.6 }}
+        variants={parentVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
       >
         <div className="container mx-auto px-4 relative z-10">
-          <div className="flex justify-between items-center mb-8">
+          <motion.div className="flex justify-between items-center mb-8" variants={fadeInUp}>
             <h2 className="text-2xl md:text-3xl font-bold">Products</h2>
             <Link href="/products" className="text-brand-purple hover:underline flex items-center">
               Show all <ArrowRight className="ml-2 w-4 h-4" />
             </Link>
-          </div>
+          </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {displayProducts.map((product: Product) => (
-              <ProductCard key={product.id} product={product} />
+              <motion.div key={product.id} variants={fadeInUp}>
+                <ProductCard product={product} />
+              </motion.div>
             ))}
           </div>
         </div>
@@ -155,21 +178,24 @@ const Home: React.FC = () => {
       {/* Why Choose Us */}
       <motion.section 
         className="py-16 bg-brand-dark"
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.8 }}
+        variants={parentVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
       >
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl md:text-3xl font-bold mb-10 text-center">Why Choose Us</h2>
+          <motion.h2 className="text-2xl md:text-3xl font-bold mb-10 text-center" variants={fadeInUp}>
+            Why Choose Us
+          </motion.h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {whyChooseUs.map((feature: Feature, index: number) => (
-              <div key={index} className="text-center">
+              <motion.div key={index} className="text-center" variants={fadeInUp}>
                 <div className="w-12 h-12 bg-brand-purple bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
                   <feature.icon className="text-brand-purple text-xl" />
                 </div>
                 <h3 className="text-lg font-bold mb-2">{feature.title}</h3>
                 <p className="text-gray-400 text-sm">{feature.description}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -177,13 +203,18 @@ const Home: React.FC = () => {
       {/* Review Form */}
       <motion.section 
         className="py-16 bg-brand-dark" id="reviews" style={{ scrollMarginTop: '80px' }}
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 1.0 }}
+        variants={parentVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
       >
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl md:text-3xl font-bold mb-10 text-center">Share Your Experience</h2>
-          <ReviewForm />
+          <motion.h2 className="text-2xl md:text-3xl font-bold mb-10 text-center" variants={fadeInUp}>
+            Share Your Experience
+          </motion.h2>
+          <motion.div variants={fadeInUp}>
+            <ReviewForm />
+          </motion.div>
         </div>
       </motion.section>
       {/* Newsletter removed as per user request */}
