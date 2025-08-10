@@ -130,7 +130,7 @@ const Navbar: React.FC = () => {
 											{/* Cart content: show empty message if cart is empty */}
 															{/* Force show empty cart message for testing */}
 															<div className="flex flex-col items-center justify-center h-[60vh]">
-																<span className="text-white/70 text-lg font-semibold" style={{fontFamily: 'var(--font-geist-sans), Geist, sans-serif'}}>Your cart is empty</span>
+																<span className="text-white/70 text-lg font-semibold" style={{fontFamily: 'var(--font-geist-sans), Geist, sans-serif'}}>YOUR CART IS EMPTY</span>
 															</div>
 						</motion.div>
 					)}
